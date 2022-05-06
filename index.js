@@ -1,4 +1,4 @@
-
+/* 
 function calculoProducto() {
     producto = prompt('Elija un producto (Coloque el número de la opción):\n \n1)Camiseta \n2)Short \n3)Varios')
 
@@ -62,55 +62,122 @@ function calculoPago() {
 
 calculoProducto()
 calculoEnvio()
-calculoPago()
+calculoPago() */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* function calculoTotal() {
-
-    let producto = prompt("Elija que producto desea:\n \nCamiseta \nShort \nVarios"); //A fines practicos todas las camisetas valen $7500 - todos los shorts valen $4500 - y todos los varios valen $3000
-
-    prompt("Elija que equipacion desea comprar:\n \nTitular \nSuplente \nTercera")
-
-    let pago = prompt("Elija la forma de pago:\n \nTransferencia (Sin Recargo) \nTarjeta Credito en 3 Pagos (Recargo del 20%)")
-
-    let envio = prompt("A que provicia realizamos el envio? \n\nBuenos aires (Envio $1000) \nCordoba (Envio $1500) \nMendoza (Envio $2000)\n \nENVIO GRATIS A COMPRAS MAYORES DE $14999");
-
-
-    while (producto != "" && pago != "" && envio != "") {
-        switch (producto) {
-            case producto === "titutlar" && pago === "transferencia" && envio === "buenos aires":
-                total = 7500 + 1000
-                alert('Su total es de: ', '$', total)
-                break
-            case producto === "titutlar" && pago === "transferencia" && envio === "cordoba":
-                total = 7500 + 1500
-                alert('Su total es de: ', '$', total)
-                break
-            case producto === "titutlar" && pago === "transferencia" && envio === "mendoza":
-                total = 7500 + 2000
-                alert('Su total es de: ', '$', total)
-                break
-            case producto === "titutlar" && pago === "transferencia" && envio === "buenos aires":
-                total = 7500 + 2000
-                alert('Su total es de: ', '$', total)
-                break
-        }
-
+alert("En el siguiente menu podrá elegir los productos de la categoria 'Camisetas'")
+class Producto {
+    constructor(id, camiseta, precio) {
+        this.id = id;
+        this.camiseta = camiseta;
+        this.precio = precio;
     }
 
+    toString() {
+        return `${this.id}. ${this.camiseta}, ${this.precio} PESOS`;
+    }
 }
 
-calculoTotal(); */
+const arrayProductos = [];
+arrayProductos.push(new Producto(1, "Camiseta titular 2022", 9000));
+arrayProductos.push(new Producto(2, "Camiseta suplente 2022", 8500));
+arrayProductos.push(new Producto(3, "Camiseta tercera 2021", 6000));
+arrayProductos.push(new Producto(4, "Camiseta tricolor 2021", 7000));
+arrayProductos.push(new Producto(5, "Camiseta arquero 2022", 8500));
+arrayProductos.push(new Producto(6, "Camiseta tercera 2020", 4500));
+
+
+
+const mensaje = (listaProductos) => {
+    let auxMensaje = [];
+    auxMensaje.push("Elija el producto que quiera comprar: ");
+    for (let i = 0; i < listaProductos.length; i++) {
+        auxMensaje.push(listaProductos[i].toString());
+    }
+    auxMensaje.push("\nPara finalizar su selección ingrese 0.");
+    return auxMensaje.join("\n");
+}
+
+let elegirProductos;
+let buscarProducto;
+const carrito = [];
+let precio = 0;
+
+// Ejecución
+elegirProductos = parseInt(prompt(mensaje(arrayProductos)));
+
+while ((elegirProductos > 0) && (elegirProductos <= arrayProductos.length) && (!isNaN(elegirProductos))) {
+    buscarProducto = arrayProductos.find((el) => el.id === elegirProductos);
+    carrito.push(buscarProducto);
+    elegirProductos = parseInt(prompt(mensaje(arrayProductos)));
+}
+
+if (carrito.length > 0) {
+    carrito.forEach((el) => (precio += el.precio));
+    alert(`Usted seleccionó:\n${carrito.join("\n")} \n\nEl total a abonar es: ${precio} PESOS`);
+} else {
+    alert("¡Que pena, no seleccionaste nada!");
+}
+
+//shorts
+
+alert("En el siguiente menu podrá elegir los productos de la categoria 'Shorts'")
+
+class Short {
+    constructor(id, short, precio) {
+        this.id = id;
+        this.short = short;
+        this.precio = precio;
+    }
+
+    toString() {
+        return `${this.id}. ${this.short}, ${this.precio} PESOS`;
+    }
+}
+
+const arrayShort = [];
+arrayShort.push(new Short(1, "short titular blanco", 3000));
+arrayShort.push(new Short(2, "short suplente rojo", 2500));
+arrayShort.push(new Short(3, "short titular negro", 3000));
+arrayShort.push(new Short(4, "short suplente negro", 2000));
+arrayShort.push(new Short(5, "short titular 2022", 3500));
+arrayShort.push(new Short(6, "short arquero 2020", 2500));
+
+
+
+const mensaje1 = (listaProductos) => {
+    let auxMensaje = [];
+    auxMensaje.push("Elija el producto que quiera comprar: ");
+    for (let i = 0; i < listaProductos.length; i++) {
+        auxMensaje.push(listaProductos[i].toString());
+    }
+    auxMensaje.push("\nPara finalizar su selección ingrese 0.");
+    return auxMensaje.join("\n");
+}
+
+let elegirShort;
+let buscarShort;
+const carrito1 = [];
+let precioShort = 0;
+
+// Ejecución
+elegirShort = parseInt(prompt(mensaje(arrayShort)));
+
+while ((elegirShort > 0) && (elegirShort <= arrayShort.length) && (!isNaN(elegirShort))) {
+    buscarShort = arrayShort.find((el) => el.id === elegirShort);
+    carrito1.push(buscarShort);
+    elegirShort = parseInt(prompt(mensaje(arrayShort)));
+}
+
+if (carrito1.length > 0) {
+    carrito1.forEach((el) => (precio += el.precio));
+    alert(`Usted seleccionó:\n${carrito1.join("\n")} \n\nEl total a abonar junto con la/s camiseta/s es: ${precio} PESOS`);
+} else {
+    alert("¡Que pena, no seleccionaste nada!");
+}
+
+
+
+
+
+
