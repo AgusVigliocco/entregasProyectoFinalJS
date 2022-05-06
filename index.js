@@ -1,69 +1,4 @@
-/* 
-function calculoProducto() {
-    producto = prompt('Elija un producto (Coloque el número de la opción):\n \n1)Camiseta \n2)Short \n3)Varios')
-
-    switch (producto) {
-        case '1':
-            total = 7500;
-            alert(`El costo del producto es $ ${total}`)
-            break;
-        case '2':
-            total = 4000;
-            alert(`El costo del producto es $ ${total}`)
-            break;
-        case '3':
-            total = 5000;
-            alert(`El costo del producto es $ ${total}`)
-            break;
-        default:
-            alert("Ingresaste mal la opción")
-    }
-}
-function calculoEnvio() {
-    envio = prompt('¿Donde te enviamos el pedido? (Coloque el número de la opción)\n \n1)Buenos Aires (Costo envio: $500) \n2)Santa Fe(Costo envio: $700) \n3)Mendoza (Costo envio: $1000)')
-
-    switch (envio) {
-        case '1':
-            envio = total + 500;
-            alert(`el costo del producto mas el envio es de $ ${envio}`);
-            break;
-        case '2':
-            envio = total + 700;
-            alert(`el costo del producto mas el envio es de $ ${envio}`);
-            break;
-        case '3':
-            envio = total + 1000;
-            alert(`el costo del producto mas el envio es de $ ${envio}`);
-            break;
-        default:
-            alert('Ingresaste mal la provincia');
-            break;
-
-    }
-}
-
-function calculoPago() {
-    pago = prompt('Elija el medio de pago: (Coloque el número de la opción)\n \n1)Transferencia (Sin recargo) \n2)Tarjeta de credito en 3 pagos (Recargo del 20%')
-
-    switch (pago) {
-        case '1':
-            pago = envio;
-            alert(`El total de la compra sera de $${pago}. Podrás hacer la transferencia a nuestra cuenta con el alias: Tienda.River.Córdoba`);
-            break;
-        case '2':
-            pago = envio + (envio * 0.20);
-            alert(`El total de la compra sera de $${pago}. Podrás hacer el pago con Tarjeta VISA o MASTERCARD`);
-            break
-        default:
-            alert('Ingresaste un modo de pago incorrecto');
-    }
-}
-
-
-calculoProducto()
-calculoEnvio()
-calculoPago() */
-
+//Camisetas
 
 alert("En el siguiente menu podrá elegir los productos de la categoria 'Camisetas'")
 class Producto {
@@ -90,7 +25,7 @@ arrayProductos.push(new Producto(6, "Camiseta tercera 2020", 4500));
 
 const mensaje = (listaProductos) => {
     let auxMensaje = [];
-    auxMensaje.push("Elija el producto que quiera comprar: ");
+    auxMensaje.push("Solo elija el numero del producto que desea: ");
     for (let i = 0; i < listaProductos.length; i++) {
         auxMensaje.push(listaProductos[i].toString());
     }
@@ -124,14 +59,14 @@ if (carrito.length > 0) {
 alert("En el siguiente menu podrá elegir los productos de la categoria 'Shorts'")
 
 class Short {
-    constructor(id, short, precio) {
+    constructor(id, short, precioShort) {
         this.id = id;
         this.short = short;
-        this.precio = precio;
+        this.precioShort = precioShort;
     }
 
     toString() {
-        return `${this.id}. ${this.short}, ${this.precio} PESOS`;
+        return `${this.id}. ${this.short}, ${this.precioShort} PESOS`;
     }
 }
 
@@ -147,7 +82,7 @@ arrayShort.push(new Short(6, "short arquero 2020", 2500));
 
 const mensaje1 = (listaProductos) => {
     let auxMensaje = [];
-    auxMensaje.push("Elija el producto que quiera comprar: ");
+    auxMensaje.push("Solo elija el numero del producto que desea: ")
     for (let i = 0; i < listaProductos.length; i++) {
         auxMensaje.push(listaProductos[i].toString());
     }
@@ -170,14 +105,94 @@ while ((elegirShort > 0) && (elegirShort <= arrayShort.length) && (!isNaN(elegir
 }
 
 if (carrito1.length > 0) {
-    carrito1.forEach((el) => (precio += el.precio));
-    alert(`Usted seleccionó:\n${carrito1.join("\n")} \n\nEl total a abonar junto con la/s camiseta/s es: ${precio} PESOS`);
+    carrito1.forEach((el) => (precioShort += el.precioShort));
+    alert(`Usted seleccionó:\n${carrito1.join("\n")} \n\nEl total a abonar es: ${precioShort} PESOS`);
+} else {
+    alert("¡Que pena, no seleccionaste nada!");
+
+}
+
+
+//Varios
+
+alert("En el siguiente menu podrá elegir los productos de la categoria 'Varios'")
+
+class Varios {
+    constructor(id, varios, precioVarios) {
+        this.id = id;
+        this.varios = varios;
+        this.precioVarios = precioVarios;
+    }
+
+    toString() {
+        return `${this.id}. ${this.varios}, ${this.precioVarios} PESOS`;
+    }
+}
+
+const arrayVarios = [];
+arrayVarios.push(new Varios(1, "Buzo canguro", 13000));
+arrayVarios.push(new Varios(2, "Rompeviento", 12500));
+arrayVarios.push(new Varios(3, "Medias altas", 1000));
+arrayVarios.push(new Varios(4, "Pelota", 2500));
+arrayVarios.push(new Varios(5, "Zapatillas", 13500));
+arrayVarios.push(new Varios(6, "Ojotas", 6500));
+
+
+
+const mensaje2 = (listaProductos) => {
+    let auxMensaje = [];
+    auxMensaje.push("Solo elija el numero del producto que desea: ");
+    for (let i = 0; i < listaProductos.length; i++) {
+        auxMensaje.push(listaProductos[i].toString());
+    }
+    auxMensaje.push("\nPara finalizar su selección ingrese 0.");
+    return auxMensaje.join("\n");
+}
+
+let elegirVarios;
+let buscarVarios;
+const carrito2 = [];
+let precioVarios = 0;
+
+// Ejecución
+elegirVarios = parseInt(prompt(mensaje(arrayVarios)));
+
+while ((elegirVarios > 0) && (elegirVarios <= arrayVarios.length) && (!isNaN(elegirVarios))) {
+    buscarVarios = arrayVarios.find((el) => el.id === elegirVarios);
+    carrito2.push(buscarVarios);
+    elegirVarios = parseInt(prompt(mensaje(arrayVarios)));
+}
+
+if (carrito2.length > 0) {
+    carrito2.forEach((el) => (precioVarios += el.precioVarios));
+    alert(`Usted seleccionó:\n${carrito2.join("\n")} \n\nEl total a abonar es: ${precioVarios} PESOS`);
 } else {
     alert("¡Que pena, no seleccionaste nada!");
 }
 
 
 
+let TotalCompraFinal = precio + precioShort + precioVarios
+
+alert(`El total a pagar de su compras es: ${TotalCompraFinal} \n \n A continuacion elija la forma de pago:`)
+
+function calculoPago() {
+    pago = prompt('Elija el medio de pago: (Coloque el número de la opción)\n \n1.Transferencia (Sin recargo) \n2.Tarjeta de credito en 3 pagos (Recargo del 20%')
+
+    switch (pago) {
+        case '1':
+            pago = TotalCompraFinal;
+            alert(`El total de la compra sera de $${pago}. Podrás hacer la transferencia a nuestra cuenta con el alias: Tienda.River.Córdoba`);
+            break;
+        case '2':
+            pago = TotalCompraFinal + (TotalCompraFinal * 0.20);
+            alert(`El total de la compra sera de $${pago}.\n\nPodrás hacer el pago con Tarjeta VISA o MASTERCARD`);
+            break
+        default:
+            alert('Ingresaste un modo de pago incorrecto');
+    }
+}
 
 
+calculoPago()
 
