@@ -18,7 +18,12 @@
 
     <!-- HEADER -->
 
+
     <header>
+        <div class="text-end">
+            <a href="/carrito.html"><img src="/Imagenes/carroRiver.png" height="5%" width="5%" alt=""></a>
+            <a href=""><img src="/Imagenes/avatar.png" height="5%" width="5%" alt=""></a>
+        </div>
         <div>
             <h1 class="d-flex justify-content-center">Tienda River Córdoba</h1>
             <p class="d-flex justify-content-center">¡Encontrá los mejores productos y los mejores precios! </p>
@@ -26,30 +31,31 @@
         <div class="d-flex justify-content-center">
             <img class="img-fluid" src="Imagenes/bannerTiendaRiver.png" alt="banner_tienda_river">
         </div>
-
-        <div>
-            <ul>
-                <a href=""><img src="" alt=""></a>
-                <a href=""><img src="" alt=""></a>
-            </ul>
-        </div>
-
-        <!-- MENU NAVBAR -->
-        <div class="d-flex justify-content-center">
-            <ul class="nav nav-pills">
-                <li class="nav-item m-5">
-                    <a class="nav-link" data-bs-toggle="pill" href="#camisetas">Camisetas</a>
-                </li>
-                <li class="nav-item m-5">
-                    <a class="nav-link" data-bs-toggle="pill" href="#shorts">Shorts</a>
-                </li>
-                <li class="nav-item m-5">
-                    <a class="nav-link" data-bs-toggle="pill" href="#varios">Varios</a>
-                </li>
-            </ul>
-        </div>
     </header>
-    <!-- Tab panes -->
+
+    <!-- MENU NAVBAR -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger text-center">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link me-5 text-uppercase fs-4" href="#camisetas">Camisetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-5 text-uppercase fs-4" href="#shorts">Shorts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-5 text-uppercase fs-4" href="#varios">Varios</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
 
     <main>
@@ -58,12 +64,11 @@
             <h2 class="d-flex justify-content-center mt-5">Camisetas</h2>
             <div class="container">
                 <div class="d-flex flex-row flex-wrap justify-content-between">
-
                     <div class="d-flex flex-column align-items-center mb-5">
                         <p>$10500</p>
                         <img class="img-fluid border-bottom border-dark"
                             src="Imagenes/camiseta-local-oficial-river-plate-21-22.jpg" alt="camiseta_local_21_22">
-                        <button type="button" class="btn btn-success">Agregar Al Carrito</button>
+                        <button id="botonCarrito" type="button" class=" btn btn-success">Agregar Al Carrito</button>
                     </div>
 
                     <div class="d-flex flex-column align-items-center mb-5">
@@ -250,8 +255,9 @@
         </div>
     </footer>
 
-    <script src="./index.js"></script>
 
+
+    <script src="./index.js"></script>
 </body>
 
 </html>

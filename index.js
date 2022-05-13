@@ -1,4 +1,4 @@
-//Camisetas
+/* //Camisetas
 
 alert("En el siguiente menu podrá elegir los productos de la categoria 'Camisetas'")
 class Producto {
@@ -177,7 +177,7 @@ let TotalCompraFinal = precio + precioShort + precioVarios
 alert(`El total a pagar de su compras es: ${TotalCompraFinal} \n \n A continuacion elija la forma de pago:`)
 
 function calculoPago() {
-    pago = prompt('Elija el medio de pago: (Coloque el número de la opción)\n \n1.Transferencia (Sin recargo) \n2.Tarjeta de credito en 3 pagos (Recargo del 20%')
+    pago = prompt('Elija el medio de pago: (Coloque el número de la opción)\n \n1.Transferencia (Sin recargo) \n2.Tarjeta de credito en 3 pagos (Recargo del 20%)')
 
     switch (pago) {
         case '1':
@@ -185,8 +185,10 @@ function calculoPago() {
             alert(`El total de la compra sera de $${pago}. Podrás hacer la transferencia a nuestra cuenta con el alias: Tienda.River.Córdoba`);
             break;
         case '2':
-            pago = TotalCompraFinal + (TotalCompraFinal * 0.20);
-            alert(`El total de la compra sera de $${pago}.\n\nPodrás hacer el pago con Tarjeta VISA o MASTERCARD`);
+            pago = TotalCompraFinal
+            interes = TotalCompraFinal * 0.20
+            total = TotalCompraFinal + interes
+            alert(`El total de la compra de los productos es de $${TotalCompraFinal}.\nEl internes por financiacion es $${interes}\nEl total de su compra FINAL será de: $${total}\n\nPodrás hacer el pago con Tarjeta VISA o MASTERCARD`);
             break
         default:
             alert('Ingresaste un modo de pago incorrecto');
@@ -196,3 +198,138 @@ function calculoPago() {
 
 calculoPago()
 
+//agrego alert informando si el envio es gratuito o no, en caso de no serlo, se informa el total del envio
+
+function envioProducto() {
+    if (TotalCompraFinal > 15000) {
+        let envio = document.createTextNode(alert("El Envio será gratuito por superar los $15000 en su compra"));
+
+
+    } else {
+        let envio = document.createTextNode(alert("El Envio tendra un costo de $1500, recuerda que si la compra total supera los $15000 el envio será sin cargo!"));
+
+    }
+}
+
+envioProducto() */
+
+
+/* const addToShoppingCartButtons = document.querySelectorAll('.addToCart');
+addToShoppingCartButtons.forEach((addToCartButton) => {
+    addToCartButton.addEventListener('click', addToCartClicked);
+});
+
+const comprarButton = document.querySelector('.comprarButton');
+comprarButton.addEventListener('click', comprarButtonClicked);
+
+const shoppingCartItemsContainer = document.querySelector(
+    '.shoppingCartItemsContainer'
+);
+
+function addToCartClicked(event) {
+    const button = event.target;
+    const item = button.closest('.item');
+
+    const itemTitle = item.querySelector('.item-title').textContent;
+    const itemPrice = item.querySelector('.item-price').textContent;
+    const itemImage = item.querySelector('.item-image').src;
+
+    addItemToShoppingCart(itemTitle, itemPrice, itemImage);
+}
+
+function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
+    const elementsTitle = shoppingCartItemsContainer.getElementsByClassName(
+        'shoppingCartItemTitle'
+    );
+    for (let i = 0; i < elementsTitle.length; i++) {
+        if (elementsTitle[i].innerText === itemTitle) {
+            let elementQuantity = elementsTitle[
+                i
+            ].parentElement.parentElement.parentElement.querySelector(
+                '.shoppingCartItemQuantity'
+            );
+            elementQuantity.value++;
+            $('.toast').toast('show');
+            updateShoppingCartTotal();
+            return;
+        }
+    }
+
+    const shoppingCartRow = document.createElement('div');
+    const shoppingCartContent = `
+  <div class="row shoppingCartItem">
+        <div class="col-6">
+            <div class="shopping-cart-item d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+                <img src=${itemImage} class="shopping-cart-image">
+                <h6 class="shopping-cart-item-title shoppingCartItemTitle text-truncate ml-3 mb-0">${itemTitle}</h6>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="shopping-cart-price d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+                <p class="item-price mb-0 shoppingCartItemPrice">${itemPrice}</p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div
+                class="shopping-cart-quantity d-flex justify-content-between align-items-center h-100 border-bottom pb-2 pt-3">
+                <input class="shopping-cart-quantity-input shoppingCartItemQuantity" type="number"
+                    value="1">
+                <button class="btn btn-danger buttonDelete" type="button">X</button>
+            </div>
+        </div>
+    </div>`;
+    shoppingCartRow.innerHTML = shoppingCartContent;
+    shoppingCartItemsContainer.append(shoppingCartRow);
+
+    shoppingCartRow
+        .querySelector('.buttonDelete')
+        .addEventListener('click', removeShoppingCartItem);
+
+    shoppingCartRow
+        .querySelector('.shoppingCartItemQuantity')
+        .addEventListener('change', quantityChanged);
+
+    updateShoppingCartTotal();
+}
+
+function updateShoppingCartTotal() {
+    let total = 0;
+    const shoppingCartTotal = document.querySelector('.shoppingCartTotal');
+
+    const shoppingCartItems = document.querySelectorAll('.shoppingCartItem');
+
+    shoppingCartItems.forEach((shoppingCartItem) => {
+        const shoppingCartItemPriceElement = shoppingCartItem.querySelector(
+            '.shoppingCartItemPrice'
+        );
+        const shoppingCartItemPrice = Number(
+            shoppingCartItemPriceElement.textContent.replace('€', '')
+        );
+        const shoppingCartItemQuantityElement = shoppingCartItem.querySelector(
+            '.shoppingCartItemQuantity'
+        );
+        const shoppingCartItemQuantity = Number(
+            shoppingCartItemQuantityElement.value
+        );
+        total = total + shoppingCartItemPrice * shoppingCartItemQuantity;
+    });
+    shoppingCartTotal.innerHTML = `${total.toFixed(2)}€`;
+}
+
+function removeShoppingCartItem(event) {
+    const buttonClicked = event.target;
+    buttonClicked.closest('.shoppingCartItem').remove();
+    updateShoppingCartTotal();
+}
+
+function quantityChanged(event) {
+    const input = event.target;
+    input.value <= 0 ? (input.value = 1) : null;
+    updateShoppingCartTotal();
+}
+
+function comprarButtonClicked() {
+    shoppingCartItemsContainer.innerHTML = '';
+    updateShoppingCartTotal();
+}
+ */
