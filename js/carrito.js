@@ -5,6 +5,7 @@ const contadorCarrito = document.getElementById('contadorCarrito')
 const cantidad = document.getElementById('cantidad')
 const precioTotal = document.getElementById('precioTotal')
 const cantidadTotal = document.getElementById('cantidadTotal')
+const pagarMercadoPago = document.getElementById('pagar-mercadoPago')
 
 let carrito = []
 
@@ -26,8 +27,7 @@ stockProductos.forEach((producto) => {
     div.classList.add('producto')
     div.innerHTML = `
     <div class= "tarjeta1">
-    <img src=${producto.imagen} alt= "">
-    <h3>${producto.nombre}</h3>
+    <img src=${producto.imagen} alt= "">  
     <p>${producto.descripcion}</p>
     <p>Talle: ${producto.talle}</p>
     <p class="precioProducto">Precio:$ ${producto.precio}</p>
@@ -49,7 +49,6 @@ stockProductos.forEach((producto) => {
 
 const agregarAlCarrito = (prodId) => {
 
-
     const existe = carrito.some(prod => prod.id === prodId)
     if (existe) {
         const prod = carrito.map(prod => {
@@ -61,17 +60,17 @@ const agregarAlCarrito = (prodId) => {
         const item = stockProductos.find((prod) => prod.id === prodId)
         carrito.push(item)
     }
-
+    swal("Listo!", "Lo agregamos al carrito!", "success");
     actualizarCarrito()
 }
 
 const eliminarDelCarrito = (prodId) => {
     const item = carrito.find((prod) => prod.id === prodId)
-
     const indice = carrito.indexOf(item)
     carrito.splice(indice, 1)
     actualizarCarrito() /
-        console.log(carrito)
+        swal("", "Eliminado", "warning");
+    console.log(carrito)
 }
 
 const actualizarCarrito = () => {
@@ -81,14 +80,13 @@ const actualizarCarrito = () => {
         const div = document.createElement('div')
         div.className = ('productoEnCarrito')
         div.innerHTML = `
+        <img class= "img-carrito" src=${prod.imagen} alt= "">
         <p>${prod.nombre}</p>
-        <p>Precio:$${prod.precio}</p>
+        <p>Precio: $ ${prod.precio}</p>
         <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>
         <button onclick="eliminarDelCarrito(${prod.id})" class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
         `
-
         contenedorCarrito.appendChild(div)
-
         localStorage.setItem('carrito', JSON.stringify(carrito))
 
     })
@@ -101,107 +99,76 @@ const actualizarCarrito = () => {
 
 
 
+const pagar = async () => {
+    const porductoToMap = carrito.map(Element => {
+        let nuevoProducto = {
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* const contenedor = document.getElementById("productos");
-const tablaCarrito = document.getElementById("tablaCarrito");
-const carrito = [];
-const PRODUCTOS = [
-    {
-        id: 1,
-        nombre: "Camiseta Titular",
-        precio: 15000,
-        stock: 10,
-        imagen: "./Imagenes/camiseta-local-oficial-river-plate-21-22.jpg"
-    },
-    {
-        id: 2,
-        nombre: "Short Titular",
-        precio: 5000,
-        stock: 6,
-        imagen: "./Imagenes/shorts-uniforme-titular-river-plate-21-22.jpg"
-    },
-    {
-        id: 3,
-        nombre: "Medias",
-        precio: 1500,
-        stock: 0,
-        imagen: "./Imagenes/medias-adisocks-unisex.jpg"
-    }
-];
-
-
-
-const getCard = (item) => {
-    return (
-        `
-        <div class="card" style="width: 18rem;">
-            <img src="${item.imagen}" class="card-img-top" alt="${item.nombre}">
-            <div class="card-body">
-                <h5 class="card-title">${item.nombre}</h5>
-                <p class="card-text">$${item.precio}</p>
-                <p class="card-text">Stock: ${item.stock}</p>
-                <button onclick=agregarCarrito(${item.id}) class="btn ${item.stock ? 'btn-primary' : 'btn-secondary'}" ${!item.stock ? 'disabled' : ''} >Agregar al carrito</button>
-            </div>
-        </div>
-    `);
-};
-
-const getRow = (item) => {
-    return (
-        `
-        <tr>
-            <th scope="row">${item.id}</th>
-            <td>${item.nombre}</td>
-            <td>${item.cantidad}</td>
-            <td>$${item.precio * item.cantidad} ($${item.precio})</td>
-            <td><img style="width: 20%" src="${item.imagen}" alt="imagen"></td>
-        </tr>
-            `
-    )
-};
-
-const cargarProductos = (datos, nodo, esTabla) => {
-    let acumulador = "";
-    datos.forEach((el) => {
-        acumulador += esTabla ? getRow(el) : getCard(el);
+            title: producto.nombre,
+            description: producto.descripcion,
+            picture_url: producto.imagen,
+            category_id: "",
+            quantity: 1,
+            currency_id: "ARS",
+            unit_price: 10
+        }
+        return nuevoProducto;
     })
-    nodo.innerHTML = acumulador;
-};
+    let response = await fetch('https://api.mercadopago.com/checkout/preferences', {
 
-const agregarCarrito = (id) => {
-    const seleccion = PRODUCTOS.find(item => item.id === id);
-
-    const busqueda = carrito.findIndex(el => el.id === id);
-    console.log(busqueda)
-    if (busqueda === -1) {
-        carrito.push({
-            id: seleccion.id,
-            nombre: seleccion.nombre,
-            precio: seleccion.precio,
-            cantidad: 1,
-            imagen: seleccion.imagen,
+        method: 'POST',
+        headers: {
+            Authorization: "Bearer TEST-7909832481632205-062013-270177f15846111795385f37ea40c8e0-174117220"
+        },
+        body: JSON.stringify({
+            items: porductoToMap
         })
-    } else {
-        carrito[busqueda].cantidad = carrito[busqueda].cantidad + 1
-    }
 
-    cargarProductos(carrito, tablaCarrito, true);
+    })
+    let data = await response.json()
+    console.log(data)
 }
 
-cargarProductos(PRODUCTOS, contenedor, false);
-
-
-
- */
+/* curl -X POST \
+    'https://api.mercadopago.com/checkout/preferences' \
+    -H 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
+    -H 'Content-Type: application/json' \
+    -d '{
+  "items": [
+    {
+      "title": "Dummy Title",
+      "description": "Dummy description",
+      "picture_url": "http://www.myapp.com/myimage.jpg",
+      "category_id": "car_electronics",
+      "quantity": 1,
+      "currency_id": "U$",
+      "unit_price": 10
+    }
+  ],
+  "payer": {
+    "phone": {},
+    "identification": {},
+    "address": {}
+  },
+  "payment_methods": {
+    "excluded_payment_methods": [
+      {}
+    ],
+    "excluded_payment_types": [
+      {}
+    ]
+  },
+  "shipments": {
+    "free_methods": [
+      {}
+    ],
+    "receiver_address": {}
+  },
+  "back_urls": {},
+  "differential_pricing": {},
+  "tracks": [
+    {
+      "type": "google_ad"
+    }
+  ],
+  "metadata": {}
+' */
